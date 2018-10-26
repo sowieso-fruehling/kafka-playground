@@ -1,9 +1,9 @@
 spring:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:29092
 
 app:
   topic:
-    name: example42
-    partitions: 3
-    replicationFactor: 1
+    name: mytopic
+    partitions: 9
+    replicationFactor: 3

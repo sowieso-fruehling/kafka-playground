@@ -35,7 +35,7 @@ public class MyConsumerConfig {
         //props.put(ConsumerConfig.GROUP_ID_CONFIG, "myConsumerGroup1");//this would put all the consumers in the same group, but consumer group could be ( and it is) defined directly on the listener methods
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");//if there are already messages in the topic, and there is a consumer with new consumer group accessing, all messages will be processed from the beginning of time
 
-        //we can combine this two properties to reduce a load on both consumer and the broker when there is not too much activity and when we don't care about immideately processing new messages
+        //we can combine this two properties to reduce a load on both consumer and the broker when there is not too much activity and when we don't care about immediately processing new messages
         //message gets fetched only if one of this two requirements is fulfilled
         //props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG,70); //This way, consumer doesn't fetch a messages until their total size is more than given value (in bytes)
         //props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 15000);//Until tih timeout passes consumer doesn't fetches messages
@@ -61,6 +61,7 @@ public class MyConsumerConfig {
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+
         factory.setConcurrency(3);// if we set this value, every listener method will have three threads. But if there is just one listener method, and topic has 2 partitions, 1 thread will be idle
         //if there are 2 listener methods, this setting will create 6 threads, but since there are only 2 partitions, 4 threads will be idle
         return factory;

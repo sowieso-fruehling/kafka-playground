@@ -25,14 +25,14 @@ public class MyProducer {
     @Value("${app.topic.name}")
     private String topicName;
 
-    //message s sent asynchronously but we won't know if message is delivered successfully
+    // message is sent asynchronously but we won't know if message is delivered successfully
     public void fireAndForgetWithKafkaMessage(String key, String content) {
         Message<String> message = createKafkaMessage(key, content);
         log.info("sending message='{}' to topic='{}'", message.getPayload(), topicName);
         kafkaTemplate.send(message);//the message will be placed in a buffer and will be sent to the broker in a separate thread
     }
 
-    //One more way of producing messages
+    // One more way of producing messages
     public void fireAndForgetWithProducerRecord(String key, String content) {
         //there is ProducerRecord constructor accepting headers also
         ProducerRecord<String, String> record = new ProducerRecord<>(topicName, key, content);
@@ -41,7 +41,7 @@ public class MyProducer {
     }
 
 
-    //    simpler but less powerfull way of producing a message
+    // simpler but less powerfull way of producing a message
     public void fireAndForgetString(String content) {
         log.info("sending message='{}' to topic='{}'", content, topicName);
         kafkaTemplate.send(topicName, content);

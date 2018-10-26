@@ -1,5 +1,6 @@
 package de.be.kafka.kafkaexamples;
 
+import de.be.kafka.kafkaexamples.admin.MyDeleter;
 import de.be.kafka.kafkaexamples.producer.MyProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,27 +17,24 @@ public class KafkaExamplesApplication implements CommandLineRunner {
         SpringApplication.run(KafkaExamplesApplication.class, args);
     }
 
-
     private final MyProducer producer;
 
-    @Override
-    public void run(String... args) throws Exception {
-        log.info("App started");
+    private final MyDeleter myDeleter;
 
-//        long t = System.currentTimeMillis();
-//        long end = t + 10000;
-//
-//        //produce for 10 seconds
-//        while (System.currentTimeMillis() < end) {
-//            producer.sendAsynchronously("2", "John");
-//        }
+    @Override
+    public void run(String... args){
 
         int counter=0;
+        String messageKey="44";
+        String messageValue="John";
         //produce 4 messages
         while (++counter<5) {
-            producer.sendAsynchronously("2", "John");
+            producer.sendAsynchronously(messageKey, messageValue);
         }
 
-        System.out.println("app closed");
+//        int partitionToDeleteFrom=6;
+//        int beforeOffset=3;
+//        myDeleter.deleteMessages(partitionToDeleteFrom, beforeOffset);
+
     }
 }
