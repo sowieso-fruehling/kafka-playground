@@ -6,8 +6,7 @@ That project contains minimal requirements to create kafka producer and consumer
 This is spring-kafka project and contains:
 
 - consumer and it's detailed configuration
-- producer and it's detailed configuration
-- delete messages feature
+- producer, it's detailed configuration and producer test
 
 
 # how to start it?
